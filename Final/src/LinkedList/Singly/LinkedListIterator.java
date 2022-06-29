@@ -1,4 +1,4 @@
-package LinkedList;
+package LinkedList.Singly;
 
 public class LinkedListIterator<AnyType> {
     public ListNode<AnyType> current;

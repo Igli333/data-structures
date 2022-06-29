@@ -1,4 +1,4 @@
-package LinkedList;
+package LinkedList.Singly;
 
 public class ListNode<AnyType> {
     public AnyType element;

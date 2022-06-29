@@ -1,4 +1,4 @@
-package LinkedList;
+package LinkedList.Singly;
 
 public class LinkedList<AnyType> {
 
@@ -213,12 +213,12 @@ public class LinkedList<AnyType> {
         }
     }
 
-    public void reverse(){
+    public void reverse() {
         ListNode<AnyType> previous = null;
         ListNode<AnyType> current = header.next;
         ListNode<AnyType> next = null;
 
-        while (current != null){
+        while (current != null) {
             next = current.next;
             current.next = previous;
             previous = current;
@@ -227,5 +227,143 @@ public class LinkedList<AnyType> {
 
         header.next = previous;
     }
+
+    public boolean palindrome() {
+        ListNode<AnyType> start = header.next;
+        ListNode<AnyType> end = header.next;
+
+        while (end.next != null) {
+            end = end.next;
+        }
+
+        while (start != end || end == header.next) {
+            if (!start.element.equals(end.element)) {
+                return false;
+            }
+            start = start.next;
+            end = findPrevious(end);
+        }
+
+        return true;
+    }
+
+    private ListNode<AnyType> findPrevious(ListNode<AnyType> node) {
+        ListNode<AnyType> itr = header.next;
+        while (itr != null) {
+            if (itr.next == node) {
+                return itr;
+            }
+            itr = itr.next;
+        }
+
+        return null;
+
+    }
+
+    public void insert2(AnyType x) {
+        ListNode<AnyType> itr = header;
+        ListNode<AnyType> newNode = new ListNode<>(x);
+
+        if (header.next == null) {
+            header.next = new ListNode<>(x);
+            return;
+        }
+
+        while (itr.next != null) {
+            if ((int) itr.next.element >= (int) x) {
+                newNode.next = itr.next;
+                itr.next = newNode;
+                return;
+            }
+
+            itr = itr.next;
+        }
+
+        itr.next = newNode;
+
+    }
+
+    public void switchUp(AnyType x) {
+        ListNode<AnyType> itr = header;
+
+        while (itr.next != null) {
+            if (itr.next.element.equals(x)) {
+                ListNode<AnyType> temp = itr.next;
+                itr.next = itr.next.next;
+                temp.next = itr.next.next;
+                itr.next.next = temp;
+                break;
+            }
+            itr = itr.next;
+        }
+    }
+
+    public void removeEven() {
+        ListNode<AnyType> itr = header;
+
+        while (itr.next != null) {
+            if ((int) itr.next.element % 2 == 0) {
+                itr.next = itr.next.next;
+                continue;
+            }
+
+            itr = itr.next;
+        }
+    }
+
+    public void removeIndex(LinkedList<AnyType> pList) {
+        ListNode<AnyType> l = header;
+        ListNode<AnyType> p = pList.header.next;
+        int c = 1;
+
+        while (l.next != null && p != null) {
+            if (c == (int) p.element) {
+                l.next = l.next.next;
+                c++;
+                p = p.next;
+                continue;
+            }
+            c++;
+            l = l.next;
+        }
+
+    }
+
+    public LinkedList<AnyType> join(LinkedList<AnyType> list2) {
+        LinkedList<AnyType> listBashkuar = new LinkedList<>();
+        LinkedListIterator<AnyType> itr1 = this.first();
+        LinkedListIterator<AnyType> itr2 = list2.first();
+        LinkedListIterator<AnyType> itrBashkuar = listBashkuar.zeroth();
+
+        while (itr1.isValid() && itr2.isValid()) {
+            if ((int) itr1.current.element >= (int) itr2.current.element) {
+                itrBashkuar.current.next = new ListNode<>(itr2.retrieve(), new ListNode<>(itr2.retrieve()));
+            } else {
+                itrBashkuar.current.next = new ListNode<>(itr1.retrieve(), new ListNode<>(itr2.retrieve()));
+            }
+            itr1.advance();
+            itr2.advance();
+            itrBashkuar.advance();
+            itrBashkuar.advance();
+        }
+
+        if (itr1.isValid()){
+            while (itr1.isValid()){
+                itrBashkuar.current.next = new ListNode<>(itr1.retrieve());
+                itr1.advance();
+                itrBashkuar.advance();
+            }
+        } else if(itr2.isValid()){
+            while (itr2.isValid()){
+                itrBashkuar.current.next = new ListNode<>(itr2.retrieve());
+                itr2.advance();
+                itrBashkuar.advance();
+            }
+        }
+
+        return listBashkuar;
+    }
+
+
 
 }
