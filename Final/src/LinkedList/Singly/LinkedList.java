@@ -366,24 +366,18 @@ public class LinkedList<AnyType> {
 
     //Needs fixing
     public void sort() {
-        ListNode<AnyType> itr = header;
+        ListNode<AnyType> itr = header.next;
         ListNode<AnyType> itr2 = null;
-        ListNode<AnyType> temp = null;
+        AnyType temp = null;
 
-        while (itr.next != null) {
-            if (itr.next.next != null) {
-                itr2 = itr.next.next;
-            }
+        while (itr != null) {
+            itr2 = itr.next;
 
-            while (itr2.next != null) {
-                if ((int) itr.next.element >= (int) itr2.next.element) {
-                    temp = itr2.next;
-                    itr2.next = itr2.next.next;
-                    temp.next = itr.next;
-                    itr.next = temp;
-                    itr = itr.next.next;
-                    itr2 = itr2.next;
-                    continue;
+            while (itr2 != null) {
+                if ((int) itr.element >= (int) itr2.element) {
+                    temp = itr2.element;
+                    itr2.element = itr.element;
+                    itr.element = temp;
                 }
                 itr2 = itr2.next;
             }
