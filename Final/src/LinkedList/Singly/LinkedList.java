@@ -347,14 +347,14 @@ public class LinkedList<AnyType> {
             itrBashkuar.advance();
         }
 
-        if (itr1.isValid()){
-            while (itr1.isValid()){
+        if (itr1.isValid()) {
+            while (itr1.isValid()) {
                 itrBashkuar.current.next = new ListNode<>(itr1.retrieve());
                 itr1.advance();
                 itrBashkuar.advance();
             }
-        } else if(itr2.isValid()){
-            while (itr2.isValid()){
+        } else if (itr2.isValid()) {
+            while (itr2.isValid()) {
                 itrBashkuar.current.next = new ListNode<>(itr2.retrieve());
                 itr2.advance();
                 itrBashkuar.advance();
@@ -364,6 +364,32 @@ public class LinkedList<AnyType> {
         return listBashkuar;
     }
 
+    //Needs fixing
+    public void sort() {
+        ListNode<AnyType> itr = header;
+        ListNode<AnyType> itr2 = null;
+        ListNode<AnyType> temp = null;
+
+        while (itr.next != null) {
+            if (itr.next.next != null) {
+                itr2 = itr.next.next;
+            }
+
+            while (itr2.next != null) {
+                if ((int) itr.next.element >= (int) itr2.next.element) {
+                    temp = itr2.next;
+                    itr2.next = itr2.next.next;
+                    temp.next = itr.next;
+                    itr.next = temp;
+                    itr = itr.next.next;
+                    itr2 = itr2.next;
+                    continue;
+                }
+                itr2 = itr2.next;
+            }
+            itr = itr.next;
+        }
+    }
 
 
 }

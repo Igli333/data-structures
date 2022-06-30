@@ -1,5 +1,6 @@
 package LinkedList;
 
+import LinkedList.Doubly.DoublyLinkedList;
 import LinkedList.Singly.LinkedList;
 
 public class Main {
@@ -8,17 +9,16 @@ public class Main {
 
         list.insert(2);
         list.insert(6);
-        list.insert(7);
-        list.insert(8);
+        list.insert(3);
+        list.insert(3);
         list.insert(9);
+        list.insert(10);
 
-        LinkedList<Integer> pist = new LinkedList<>();
-        pist.insert(1);
-        pist.insert(2);
-        pist.insert(4);
+        list.sort();
 
-        list.join(pist);
         LinkedList.printList(list);
+
+
 
 
     }
