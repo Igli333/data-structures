@@ -94,7 +94,7 @@ public class BinaryTree<AnyType> {
         }
 
 
-        if (root.left.element == x || root.right.element == x) {
+        if ((root.left != null && root.left.element == x) || (root.right != null && root.right.element == x)) {
             System.out.println(root.element);
         } else {
             parentOf(root.left, x);
@@ -159,7 +159,7 @@ public class BinaryTree<AnyType> {
 
         int depth = -1;
 
-        if (root.element == x || (depth = depthOf(root.left, k)) >= 0 || (depth = depthOf(root.right, k)) >= 0) {
+        if (root.element == k || (depth = depthOf(root.left, k)) >= 0 || (depth = depthOf(root.right, k)) >= 0) {
             return depth + 1;
         }
 
@@ -179,9 +179,11 @@ public class BinaryTree<AnyType> {
             return 0;
         }
 
-        if ((int) root.element + (int) root.left.element == k || (int) root.element + (int) root.right.element == k) {
+        if ((root.left != null && (int) root.element + (int) root.left.element == k)
+                || (root.right != null && (int) root.element + (int) root.right.element == k)) {
             return 1 + sumPairs(root.left, k) + sumPairs(root.right, k);
-        } else if ((int) root.element + (int) root.left.element == k && (int) root.element + (int) root.right.element == k) {
+        } else if ((root.left != null && (int) root.element + (int) root.left.element == k)
+                && (root.right != null && (int) root.element + (int) root.right.element == k)) {
             return 2 + sumPairs(root.left, k) + sumPairs(root.right, k);
         } else {
             return sumPairs(root.left, k) + sumPairs(root.right, k);
@@ -289,5 +291,6 @@ public class BinaryTree<AnyType> {
         root.right = temp;
 
     }
+
 
 }
