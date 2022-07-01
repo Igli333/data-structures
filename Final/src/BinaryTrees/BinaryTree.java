@@ -152,17 +152,142 @@ public class BinaryTree<AnyType> {
         }
     }
 
-    public int depthOf(BinaryNode<AnyType> root, AnyType k){
-        if (root == null){
+    public int depthOf(BinaryNode<AnyType> root, AnyType k) {
+        if (root == null) {
             return -1;
         }
 
-        int distance = -1;
-        distance += depthOf(root.left) +
-        if (root.element == k){
-            return distance;
+        int depth = -1;
+
+        if (root.element == x || (depth = depthOf(root.left, k)) >= 0 || (depth = depthOf(root.right, k)) >= 0) {
+            return depth + 1;
+        }
+
+        return depth;
+    }
+
+    public int depth(BinaryNode<AnyType> root) {
+        if (root == null) {
+            return -1;
+        }
+
+        return 1 + Math.max(depth(root.left), depth(root.right));
+    }
+
+    public int sumPairs(BinaryNode<AnyType> root, int k) {
+        if (root == null) {
+            return 0;
+        }
+
+        if ((int) root.element + (int) root.left.element == k || (int) root.element + (int) root.right.element == k) {
+            return 1 + sumPairs(root.left, k) + sumPairs(root.right, k);
+        } else if ((int) root.element + (int) root.left.element == k && (int) root.element + (int) root.right.element == k) {
+            return 2 + sumPairs(root.left, k) + sumPairs(root.right, k);
+        } else {
+            return sumPairs(root.left, k) + sumPairs(root.right, k);
         }
     }
 
+    public boolean equal(BinaryNode<AnyType> r1, BinaryNode<AnyType> r2) {
+        if (r1 == null && r2 == null) {
+            return true;
+        }
+
+        if ((r1 == null && r2 != null) || (r1 != null && r2 == null)) {
+            return false;
+        }
+
+        return r1.element.equals(r2.element) && equal(r1.left, r2.left) && equal(r1.right, r2.right);
+    }
+
+    public boolean isBST(BinaryNode<AnyType> root) {
+        if (root == null) {
+            return true;
+        }
+
+        if ((int) root.element > (int) root.left.element && (int) root.element < (int) root.right.element) {
+            return isBST(root.left) && isBST(root.right);
+        }
+
+        return false;
+    }
+
+    public boolean isBalanced(BinaryNode<AnyType> root) {
+        if (root == null) {
+            return true;
+        }
+
+        if (depth(root.left) - depth(root.right) > 1 || depth(root.right) - depth(root.left) > 1) {
+            return false;
+        }
+
+        return isBalanced(root.left) && isBalanced(root.right);
+    }
+
+    public void kDepthElements(BinaryNode<AnyType> root, int k) {
+        if (root == null) {
+            return;
+        }
+
+        if (k == 0) {
+            System.out.print(root.element + "");
+            return;
+        }
+
+        kDepthElements(root.left, k - 1);
+        kDepthElements(root.right, k - 1);
+
+    }
+
+    public int kSum(BinaryNode<AnyType> root, int k) {
+        if (root == null) {
+            return 0;
+        }
+
+        if (k == 0) {
+            return (int) root.element;
+        }
+
+        return kSum(root.left, k - 1) + kSum(root.right, k - 1);
+    }
+
+    public int kBiggest(BinaryNode<AnyType> root, int k) {
+        if (root == null) {
+            return Integer.MIN_VALUE;
+        }
+
+        if (k == 0) {
+            return (int) root.element;
+        }
+
+        return Math.max(kBiggest(root.left, k - 1), kBiggest(root.right, k - 1));
+    }
+
+    public int kFullNodes(BinaryNode<AnyType> root, int k) {
+        if (root == null) {
+            return 0;
+        }
+
+        if (k == 0) {
+            if (root.left != null && root.right != null) {
+                return 1;
+            }
+            return 0;
+        }
+
+        return kFullNodes(root.left, k - 1) + kFullNodes(root.right, k - 1);
+    }
+
+    public void buildSymmetric(BinaryNode<AnyType> root) {
+        if (root == null) {
+            return;
+        }
+        buildSymmetric(root.left);
+        buildSymmetric(root.right);
+        BinaryNode<AnyType> temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+    }
 
 }
